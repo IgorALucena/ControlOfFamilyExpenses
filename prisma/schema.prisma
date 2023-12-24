@@ -9,3 +9,52 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model responsavel {
+  id            Int       @id @default(autoincrement())
+  data_cadastro String    @unique
+  gastos        gastos[]
+  receita       receita[]
+}
+
+model gastos {
+  id                 Int             @id @default(autoincrement())
+  data_cadastro      DateTime
+  responsavelId      responsavel     @relation(fields: [id_responsavel], references: [id])
+  gasto              tipo_gasto      @relation(fields: [id_tipo_gasto], references: [id])
+  id_tipo_gasto      Int
+  estabelecimento    estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  id_estabelecimento Int
+  observacao         String?
+  valor              Decimal
+  id_responsavel     Int
+}
+
+model receita {
+  id              Int          @id @default(autoincrement())
+  receita         tipo_receita @relation(fields: [id_tipo_receita], references: [id])
+  id_tipo_receita Int
+  responsavelId   responsavel  @relation(fields: [id_responsavel], references: [id])
+  id_responsavel  Int
+  data_cadastro   DateTime
+  observacao      String?
+  valor           Decimal
+}
+
+model tipo_gasto {
+  id     Int      @id @default(autoincrement())
+  nome   String   @unique
+  gastos gastos[]
+}
+
+model estabelecimento {
+  id     Int      @id @default(autoincrement())
+  nome   String   @unique
+  gastos gastos[]
+}
+
+model tipo_receita {
+  id      Int       @id @default(autoincrement())
+  nome    String    @unique
+  receita receita[]
+}
