@@ -1,5 +1,4 @@
 const { PrismaClient } = require('@prisma/client');
-const { Double } = require('mongodb');
 const prisma = new PrismaClient();
 
 let spentPerPeriodController = async (req, res) => {
