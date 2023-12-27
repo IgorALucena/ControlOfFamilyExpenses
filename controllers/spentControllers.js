@@ -1,7 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
+const { Double } = require('mongodb');
 const prisma = new PrismaClient();
 
-let spentPerPeriod = async (req, res) => {
+let spentPerPeriodController = async (req, res) => {
     try {
         let date = new Date(req.params.period);
         date.setHours(0, 0, 0, 0);
@@ -23,7 +24,7 @@ let spentPerPeriod = async (req, res) => {
 
         });
         console.log(result);
-        if (!result) {
+        if (result.length === 0) {
             return res.status(404).json({ status: "No expenses found for the period reported." });
         }
         else {
@@ -42,4 +43,60 @@ let spentPerPeriod = async (req, res) => {
     }
 }
 
-module.exports = { spentPerPeriod };
+let spentValueController = async (req, res) => {
+    try {
+        let valueParameter = req.params.value;
+        let result = await prisma.gastos.findMany({
+            select: {
+                data_cadastro: true,
+                observacao: true,
+                valor: true
+            },
+            where: {
+                valor: valueParameter
+            }
+        })
+        console.log(result);
+        if (result.length === 0) {
+            return res.status(404).json({ status: "No expenses found for value reported." });
+        }
+        res.status(200).json({
+            status: "data found.",
+            data: result
+        });
+
+    }
+    catch (err) {
+        res.status(404).json({ msg: `Error: ${err}` });
+    }
+}
+
+let spentResponsibleController = async (req, res) => {
+    try {
+        let id = parseInt(req.params.id);
+        let result = await prisma.gastos.findMany({
+            select: {
+                data_cadastro: true,
+                observacao: true,
+                valor: true
+            },
+            where: {
+                id_responsavel: id
+            }
+        })
+
+        console.log(result);
+        if (result.length === 0) {
+            return res.status(404).json({ status: "No expenses found for responsible reported." });
+        }
+        res.status(200).json({
+            status: "data found.",
+            data: result
+        });
+
+    } catch (err) {
+        res.status(404).json({ msg: `Error: ${err}` });
+    }
+}
+
+module.exports = { spentPerPeriodController, spentValueController, spentResponsibleController };

@@ -1,7 +1,11 @@
 const express = require('express');
 const routerSpent = express.Router();
-const {spentPerPeriod} = require('../controllers/spentControllers');
+const { spentPerPeriodController, spentValueController, spentResponsibleController } = require('../controllers/spentControllers');
 
-routerSpent.get('/:period', spentPerPeriod);
+routerSpent.get('/:period', spentPerPeriodController);
 
-module.exports = {routerSpent};
+routerSpent.get('/value/:value', spentValueController);
+
+routerSpent.get('/responsible/:id', spentResponsibleController);
+
+module.exports = { routerSpent };
