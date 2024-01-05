@@ -99,11 +99,11 @@ let editTypeOfExpenseController = async (req, res) => {
         let id = parseInt(req.params.id);
         let { nome } = req.body;
         let result = await prisma.tipo_gasto.update({
-            data:{
-                nome:nome
+            data: {
+                nome: nome
             },
             where: {
-                id:id
+                id: id
             }
         })
         res.status(200).json({
