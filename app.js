@@ -7,6 +7,7 @@ const { routerResponsible } = require('./routes/routeResponsible');
 const { routerTypeOfExpense } = require('./routes/routeTypeOfExpense');
 const { routerEstablishment } = require('./routes/routeEstablishment');
 const { routerRevenue } = require('./routes/routeRevenue');
+const { routerTypeOfRevenue } = require('./routes/routeTypeOfRevenue');
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +25,8 @@ app.use('/routerTypeOfExpense', routerTypeOfExpense);
 app.use('/routerEstablishment', routerEstablishment);
 
 app.use('/routerRevenue', routerRevenue);
+
+app.use('/routerTypeOfRevenue', routerTypeOfRevenue);
 
 app.listen(PORT, () => {
     console.log('Server running!')
