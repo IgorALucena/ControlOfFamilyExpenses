@@ -145,9 +145,10 @@ let editSpent = async (req, res) => {
     try {
         let id = parseInt(req.params.id);
         let { data_cadastro, id_tipo_gasto, id_estabelecimento, observacao, valor, id_responsavel } = req.body;
+        let date = new Date(data_cadastro);
         let result = await prisma.gastos.update({
             data: {
-                ...(data_cadastro ? { data_cadastro } : {}),
+                ...(data_cadastro ? { data_cadastro: date } : {}),
                 ...(id_tipo_gasto ? { id_tipo_gasto } : {}),
                 ...(id_estabelecimento ? { id_estabelecimento } : {}),
                 ...(observacao ? { observacao } : {}),
