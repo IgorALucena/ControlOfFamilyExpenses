@@ -1,7 +1,13 @@
 const express = require('express');
 const routerResponsible = express.Router();
-const {searchResponsibleController} = require('../controllers/responsibleController')
+const { searchResponsibleController, registerResponsible, deleteResponsible, editResponsible } = require('../controllers/responsibleController')
 
-routerResponsible.get('/:id?', searchResponsibleController );
+routerResponsible.get('/:id?', searchResponsibleController);
 
-module.exports = {routerResponsible};
+routerResponsible.post('/register', registerResponsible);
+
+routerResponsible.delete('/delete/:id', deleteResponsible);
+
+routerResponsible.put('/edit/:id', editResponsible);
+
+module.exports = { routerResponsible };

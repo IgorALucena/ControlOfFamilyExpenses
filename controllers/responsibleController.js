@@ -45,4 +45,64 @@ let searchResponsibleController = async (req, res) => {
 
 }
 
-module.exports = { searchResponsibleController };
+let registerResponsible = async (req, res) => {
+    try {
+        let { data_cadastro } = req.body;
+        let result = await prisma.responsavel.create({
+            data: {
+                data_cadastro
+            }
+        })
+        res.status(200).json({
+            status: 'successfully registered',
+            data: result
+        })
+    }
+    catch (err) {
+        res.status(404).json({ msg: `Error: ${err}` });
+    }
+}
+
+let deleteResponsible = async (req, res) => {
+    try {
+        let id = parseInt(req.params.id);
+        let result = await prisma.responsavel.delete({
+            where: {
+                id: id
+            }
+        })
+        res.status(200).json({
+            status: 'successfully deleted',
+            data: result
+        })
+
+    }
+    catch (err) {
+        res.status(404).json({ msg: `Error: ${err}` });
+    }
+}
+
+let editResponsible = async (req, res) => {
+    try {
+        let id = parseInt(req.params.id);
+        let { data_cadastro } = req.body;
+        let result = await prisma.responsavel.update({
+            data: {
+                data_cadastro
+            },
+            where: {
+                id: id
+            }
+        })
+        res.status(200).json({
+            status: 'successfully updated',
+            data: result
+        })
+
+    }
+    catch (err) {
+        res.status(404).json({ msg: `Error: ${err}` });
+    }
+}
+
+module.exports = { searchResponsibleController, registerResponsible, deleteResponsible, editResponsible };
