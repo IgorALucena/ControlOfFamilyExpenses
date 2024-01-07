@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const searchFinalBalancePMonthController = async (req, res) => { // initialMonth=2023-12-26&finalMonth=2023-12-26
+const searchFinalBalancePPeriodController = async (req, res) => { // initialMonth=2023-12-26&finalMonth=2023-12-26
     try {
         let initialMonth = req.query.initialMonth;
         let finalMonth = req.query.finalMonth;
@@ -94,4 +94,4 @@ const searchFinalBalancePMonthController = async (req, res) => { // initialMonth
 }
 
 
-module.exports = { searchFinalBalancePMonthController };
+module.exports = { searchFinalBalancePPeriodController };
