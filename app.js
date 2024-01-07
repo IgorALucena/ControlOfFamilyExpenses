@@ -8,13 +8,16 @@ const { routerTypeOfExpense } = require('./routes/routeTypeOfExpense');
 const { routerEstablishment } = require('./routes/routeEstablishment');
 const { routerRevenue } = require('./routes/routeRevenue');
 const { routerTypeOfRevenue } = require('./routes/routeTypeOfRevenue');
+const {routerFinalBalancePerMonth} = require ('./routes/routeFinalBalancePerMonth');
 
 app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
     res.status(200).json({ msg: "Welcome to API of Control of Family Expenses" })
-})
+});
+
+app.use('/routerFinalBalancePerMonth', routerFinalBalancePerMonth);
 
 app.use('/routerSpent', routerSpent);
 
