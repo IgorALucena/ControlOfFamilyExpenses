@@ -11,6 +11,8 @@ const { routerTypeOfRevenue } = require('./routes/routeTypeOfRevenue');
 const { routerFinalBalancePerPeriod } = require('./routes/routeFinalBalancePerPeriod');
 const { routerSpentPerResponsiblPerPeriod } = require('./routes/routeSpentPerResponsiblePerPeriod');
 const { routerRevenuePerResponsiblePerPeriod } = require('./routes/routeRevenuePerResponsiblePerPeriod');
+const { routerFinalBalancePerMonth } = require('./routes/routeFinalBalancePerMonth');
+
 
 app.use(cors());
 app.use(express.json());
@@ -19,7 +21,7 @@ app.get('/', (req, res) => {
     res.status(200).json({ msg: "Welcome to API of Control of Family Expenses" })
 });
 
-app.use('/routerFinalBalancePerMonth', routerFinalBalancePerPeriod);
+app.use('/routerFinalBalancePerPeriod', routerFinalBalancePerPeriod);
 
 app.use('/routerSpent', routerSpent);
 
@@ -36,6 +38,8 @@ app.use('/routerTypeOfRevenue', routerTypeOfRevenue);
 app.use('/routerSpentPerResponsiblePerPeriod', routerSpentPerResponsiblPerPeriod);
 
 app.use('/routerRevenuePerResponsiblePerPeriod', routerRevenuePerResponsiblePerPeriod);
+
+app.use('/routerFinalBalancePerMonth', routerFinalBalancePerMonth);
 
 app.listen(PORT, () => {
     console.log('Server running!')

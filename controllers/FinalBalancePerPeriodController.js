@@ -34,7 +34,7 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialMont
                 valueSumRevenue += Number(revenueResult[index].valor);
             }
 
-            let whatWasLeft = Math.abs(valueSumSpent - valueSumRevenue);
+            let whatWasLeft = valueSumRevenue - valueSumSpent;
             let currentData = new Date();
             return res.status(200).json({
                 status: "data found",

@@ -1,6 +1,6 @@
 const express = require('express');
 const routerEstablishment = express.Router();
-const { searchEstablishmentController, registerEstablishment, deleteEstablishment, editEstablishment } = require('../controllers/EstablishmentController');
+const { searchEstablishmentController, registerEstablishment, deleteEstablishment, editEstablishment } = require('../controllers/establishmentController');
 
 routerEstablishment.get('/:nameEstablishment?', searchEstablishmentController);
 
