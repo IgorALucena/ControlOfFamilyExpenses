@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const searchSpentPerResponsiblePerPeriod = async (req, res) => {
+const searchRevenuePerResponsiblePerPeriod = async (req, res) => {
     try {
         let id = parseInt(req.params.id);
         let initialPeriod = req.query.initialPeriod;
@@ -10,25 +10,25 @@ const searchSpentPerResponsiblePerPeriod = async (req, res) => {
         initialPeriod.setHours(23, 59, 59, 999);
 
         if (!finalPeriod) {
-            let spentResult = await prisma.gastos.findMany({
+            let revenueResult = await prisma.receita.findMany({
                 select: {
                     valor: true
                 },
                 where: {
                     data_cadastro: { gte: initialPeriod.toISOString() },
-                    id_responsavel:id
+                    id_responsavel: id
                 }
             })
-            let valueSumSpent = 0;
-            for (let index = 0; index < spentResult.length; index++) {
-                valueSumSpent += Number(spentResult[index].valor);
+            let valueSumRevenue = 0;
+            for (let index = 0; index < revenueResult.length; index++) {
+                valueSumRevenue += Number(revenueResult[index].valor);
             }
             let currentData = new Date();
             return res.status(200).json({
                 status: "data found",
                 monthReported: initialPeriod,
                 currentData: currentData,
-                spentPerPeriod: valueSumSpent
+                revenuePerPeriod: valueSumRevenue
             });
         }
         else {
@@ -36,7 +36,7 @@ const searchSpentPerResponsiblePerPeriod = async (req, res) => {
             finalPeriod = new Date(req.query.finalPeriod);
             finalPeriod.setHours(23, 59, 59, 999);
 
-            let spentResult = await prisma.gastos.findMany({
+            let revenueResult = await prisma.receita.findMany({
                 select: {
                     valor: true
                 },
@@ -48,16 +48,16 @@ const searchSpentPerResponsiblePerPeriod = async (req, res) => {
                     id_responsavel:id
                 }
             })
-            let valueSumSpent = 0;
-            for (let index = 0; index < spentResult.length; index++) {
-                valueSumSpent += Number(spentResult[index].valor);
+            let valueSumRevenue = 0;
+            for (let index = 0; index < revenueResult.length; index++) {
+                valueSumRevenue += Number(revenueResult[index].valor);
             }
 
             return res.status(200).json({
                 status: "data found",
                 monthReported: initialPeriod,
                 finalPeriodReported: finalPeriod,
-                spentPerPeriod: valueSumSpent
+                revenuePerPeriod: valueSumRevenue
             });
         }
     } catch (err) {
@@ -66,4 +66,4 @@ const searchSpentPerResponsiblePerPeriod = async (req, res) => {
 }
 
 
-module.exports = { searchSpentPerResponsiblePerPeriod };
+module.exports = { searchRevenuePerResponsiblePerPeriod };

@@ -9,7 +9,8 @@ const { routerEstablishment } = require('./routes/routeEstablishment');
 const { routerRevenue } = require('./routes/routeRevenue');
 const { routerTypeOfRevenue } = require('./routes/routeTypeOfRevenue');
 const { routerFinalBalancePerPeriod } = require('./routes/routeFinalBalancePerPeriod');
-const { routerSpentPerResponsiblPerPeriod } = require('./routes/routeSpentPerResponsible');
+const { routerSpentPerResponsiblPerPeriod } = require('./routes/routeSpentPerResponsiblePerPeriod');
+const { routerRevenuePerResponsiblePerPeriod } = require('./routes/routeRevenuePerResponsiblePerPeriod');
 
 app.use(cors());
 app.use(express.json());
@@ -33,6 +34,8 @@ app.use('/routerRevenue', routerRevenue);
 app.use('/routerTypeOfRevenue', routerTypeOfRevenue);
 
 app.use('/routerSpentPerResponsiblePerPeriod', routerSpentPerResponsiblPerPeriod);
+
+app.use('/routerRevenuePerResponsiblePerPeriod', routerRevenuePerResponsiblePerPeriod);
 
 app.listen(PORT, () => {
     console.log('Server running!')

@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 let searchRevenueController = async (req, res) => {
     try {
         let date = new Date(req.params.period);
-        date.setHours(0, 0, 0, 0);
+        date.setHours(23, 59, 59, 999);
         let nextDay = new Date(date);
         nextDay.setDate(date.getDate() + 1);
         let result = await prisma.receita.findMany({

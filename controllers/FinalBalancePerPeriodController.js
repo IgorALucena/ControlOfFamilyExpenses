@@ -6,7 +6,7 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialMont
         let initialMonth = req.query.initialMonth;
         let finalMonth = req.query.finalMonth;
         initialMonth = new Date(initialMonth);
-        initialMonth.setHours(0, 0, 0, 0);
+        initialMonth.setHours(23, 59, 59, 999);
 
         if (!finalMonth) {
             let spentResult = await prisma.gastos.findMany({
