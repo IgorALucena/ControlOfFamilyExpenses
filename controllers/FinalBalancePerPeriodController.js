@@ -1,52 +1,48 @@
 const { PrismaClient } = require('@prisma/client');
+const { parseDate } = require('../utils/parseDate');
+const { sumSpentOrRevenue } = require('../utils/sumSpentOrRevenue');
 const prisma = new PrismaClient();
 
-const searchFinalBalancePPeriodController = async (req, res) => { // initialMonth=2023-12-26&finalMonth=2023-12-26
+const searchFinalBalancePPeriodController = async (req, res) => { // initialPeriod=2023-12-26&finalPeriod=2023-12-26
     try {
-        let initialMonth = req.query.initialMonth;
-        let finalMonth = req.query.finalMonth;
-        initialMonth = new Date(initialMonth);
-        initialMonth.setHours(23, 59, 59, 999);
+        let initialPeriod = parseDate(req.query.initialPeriod);
+        let finalPeriod = req.query.finalPeriod;
 
-        if (!finalMonth) {
+        if (!finalPeriod) {
             let spentResult = await prisma.gastos.findMany({
                 select: {
                     valor: true
                 },
                 where: {
-                    data_cadastro: { gte: initialMonth.toISOString() }
+                    data_cadastro: { gte: initialPeriod.toISOString() }
                 }
             })
-            let valueSumSpent = 0;
-            for (let index = 0; index < spentResult.length; index++) {
-                valueSumSpent += Number(spentResult[index].valor);
-            }
+
+            let valueSumSpent = sumSpentOrRevenue(spentResult);
+           
             let revenueResult = await prisma.receita.findMany({
                 select: {
                     valor: true
                 },
                 where: {
-                    data_cadastro: { gte: initialMonth.toISOString() }
+                    data_cadastro: { gte: initialPeriod.toISOString() }
                 }
             })
-            let valueSumRevenue = 0;
-            for (let index = 0; index < revenueResult.length; index++) {
-                valueSumRevenue += Number(revenueResult[index].valor);
-            }
+
+            let valueSumRevenue = sumSpentOrRevenue(revenueResult);
 
             let whatWasLeft = valueSumRevenue - valueSumSpent;
             let currentData = new Date();
             return res.status(200).json({
                 status: "data found",
-                monthReported: initialMonth,
+                monthReported: initialPeriod,
                 currentData: currentData,
                 finalBalance: whatWasLeft
             });
         }
         else {
 
-            finalMonth = new Date(req.query.finalMonth);
-            finalMonth.setHours(23, 59, 59, 999);
+            finalPeriod = parseDate(finalPeriod)
 
             let spentResult = await prisma.gastos.findMany({
                 select: {
@@ -54,15 +50,12 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialMont
                 },
                 where: {
                     AND: [
-                        { data_cadastro: { gte: initialMonth.toISOString() } },
-                        { data_cadastro: { lte: finalMonth.toISOString() } }
+                        { data_cadastro: { gte: initialPeriod.toISOString() } },
+                        { data_cadastro: { lte: finalPeriod.toISOString() } }
                     ]
                 }
             })
-            let valueSumSpent = 0;
-            for (let index = 0; index < spentResult.length; index++) {
-                valueSumSpent += Number(spentResult[index].valor);
-            }
+            let valueSumSpent = sumSpentOrRevenue(spentResult);
 
             let revenueResult = await prisma.receita.findMany({
                 select: {
@@ -70,21 +63,18 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialMont
                 },
                 where: {
                     AND: [
-                        { data_cadastro: { gte: initialMonth.toISOString() } },
-                        { data_cadastro: { lte: finalMonth.toISOString() } }
+                        { data_cadastro: { gte: initialPeriod.toISOString() } },
+                        { data_cadastro: { lte: finalPeriod.toISOString() } }
                     ]
                 }
             })
-            let valueSumRevenue = 0;
-            for (let index = 0; index < revenueResult.length; index++) {
-                valueSumRevenue += Number(revenueResult[index].valor);
-            }
-
+            let valueSumRevenue = sumSpentOrRevenue(revenueResult);
+            
             let whatWasLeft = Math.abs(valueSumSpent - valueSumRevenue);
             return res.status(200).json({
                 status: "data found",
-                monthReported: initialMonth,
-                finalMonthReported: finalMonth,
+                monthReported: initialPeriod,
+                finalPeriodReported: finalPeriod,
                 finalBalance: whatWasLeft
             });
         }
