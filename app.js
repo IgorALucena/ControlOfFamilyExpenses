@@ -12,7 +12,8 @@ const { routerFinalBalancePerPeriod } = require('./routes/routeFinalBalancePerPe
 const { routerSpentPerResponsiblPerPeriod } = require('./routes/routeSpentPerResponsiblePerPeriod');
 const { routerRevenuePerResponsiblePerPeriod } = require('./routes/routeRevenuePerResponsiblePerPeriod');
 const { routerFinalBalancePerMonth } = require('./routes/routeFinalBalancePerMonth');
-
+const { routerSpentPerResponsiblePerMonth } = require('./routes/routeSpentPerResponsiblePerMonthController');
+const { routerRevenuePerResponsiblePerMonth } = require('./routes/routeRevenuePerResponsiblePerMonth');
 
 app.use(cors());
 app.use(express.json());
@@ -40,6 +41,10 @@ app.use('/routerSpentPerResponsiblePerPeriod', routerSpentPerResponsiblPerPeriod
 app.use('/routerRevenuePerResponsiblePerPeriod', routerRevenuePerResponsiblePerPeriod);
 
 app.use('/routerFinalBalancePerMonth', routerFinalBalancePerMonth);
+
+app.use('/routeSpentPerResponsiblePerMonth', routerSpentPerResponsiblePerMonth);
+
+app.use('/routeRevenuePerResponsiblePerMonth', routerRevenuePerResponsiblePerMonth);
 
 app.listen(PORT, () => {
     console.log('Server running!')
