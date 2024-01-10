@@ -42,7 +42,7 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialPeri
         }
         else {
 
-            finalPeriod = parseDate(finalPeriod)
+            finalPeriod = parseDate(finalPeriod);
 
             let spentResult = await prisma.gastos.findMany({
                 select: {

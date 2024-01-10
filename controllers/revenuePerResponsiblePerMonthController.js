@@ -1,30 +1,16 @@
 const { PrismaClient } = require('@prisma/client');
+const { parseDate } = require('../utils/parseDate');
+const { monthsAndSum } = require('../utils/monthsAndSum');
+const { objBuild } = require('../utils/objBuild');
 const prisma = new PrismaClient();
+
 
 const searchRevenuePerResponsiblePerMonthController = async (req, res) => {
     try {
 
-        let aux = [];
-        let arrayObj = [
-            { mes: "janeiro", soma: 0 },
-            { mes: "fevereiro", soma: 0 },
-            { mes: "março", soma: 0 },
-            { mes: "abril", soma: 0 },
-            { mes: "maio", soma: 0 },
-            { mes: "junho", soma: 0 },
-            { mes: "julho", soma: 0 },
-            { mes: "agosto", soma: 0 },
-            { mes: "setembro", soma: 0 },
-            { mes: "outubro", soma: 0 },
-            { mes: "novembro", soma: 0 },
-            { mes: "dezembro", soma: 0 },
-        ]
-
         let id = parseInt(req.params.id);
-        let initialMonth = req.query.initialMonth;
+        let initialMonth = parseDate(req.query.initialMonth);
         let finalMonth = req.query.finalMonth;
-        initialMonth = new Date(initialMonth);
-        initialMonth.setHours(23, 59, 59, 999);
 
         if (!finalMonth) {
             let revenueResult = await prisma.receita.findMany({
@@ -37,28 +23,19 @@ const searchRevenuePerResponsiblePerMonthController = async (req, res) => {
                     id_responsavel: id
                 }
             })
+    
+            let monthAndSum = monthsAndSum(revenueResult);
 
-            for (let index = 0; index < revenueResult.length; index++) {
-                let data = new Date(revenueResult[index].data_cadastro);
-                let month = data.getMonth();
-                arrayObj[month].soma += Number(revenueResult[index].valor);
-            }
-
-            for (let index = 0; index < arrayObj.length; index++) {
-                if (arrayObj[index].soma !== 0) {
-                    aux[index] = `Mês: ${arrayObj[index].mes} | Ganhos totais: ${arrayObj[index].soma}`
-                }
-            }
+            let objCreated = objBuild(monthAndSum);
 
             return res.status(200).json({
                 status: "data found",
-                revenues: aux.join(' ').trim()
+                revenues: objCreated
             });
         }
         else {
 
-            finalMonth = new Date(req.query.finalMonth);
-            finalMonth.setHours(23, 59, 59, 999);
+            finalMonth = parseDate(finalMonth);
 
             let revenueResult = await prisma.receita.findMany({
                 select: {
@@ -72,22 +49,15 @@ const searchRevenuePerResponsiblePerMonthController = async (req, res) => {
                     ],
                     id_responsavel: id
                 }
-            })
-            for (let index = 0; index < revenueResult.length; index++) {
-                let data = new Date(revenueResult[index].data_cadastro);
-                let month = data.getMonth();
-                arrayObj[month].soma += Number(revenueResult[index].valor);
-            }
+            });
 
-            for (let index = 0; index < arrayObj.length; index++) {
-                if (arrayObj[index].soma !== 0) {
-                    aux[index] = `Mês: ${arrayObj[index].mes} | Ganhos totais: ${arrayObj[index].soma}`
-                }
-            }
+            let monthAndSum = monthsAndSum(revenueResult);
+
+            let objCreated = objBuild(monthAndSum);
 
             return res.status(200).json({
                 status: "data found",
-                revenues: aux.join(' ').trim()
+                revenues: objCreated
             });
         }
     } catch (err) {
