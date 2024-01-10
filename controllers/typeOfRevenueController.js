@@ -41,7 +41,7 @@ let searchTypeOfRevenue = async (req, res) => {
                 }
             })
             return res.status(200).json({
-                status: `data of type of revenues ${establishment} found.`,
+                status: `data of type of revenues ${revenue} found.`,
                 data: result
             });
         }

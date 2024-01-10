@@ -1,0 +1,1060 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Family expenses control API",
+    "description": "Welcome!",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Root"
+        ],
+        "description": "Welcome.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/routerFinalBalancePerPeriod/": {
+      "get": {
+        "tags": [
+          "Balance"
+        ],
+        "description": "Designated route to fetch ending balance grouped by period.",
+        "parameters": [
+          {
+            "name": "initialPeriod",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "finalPeriod",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpent/{period}": {
+      "get": {
+        "tags": [
+          "Spent"
+        ],
+        "description": "Designated route to search for expenses by period.",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpent/value/{value}": {
+      "get": {
+        "tags": [
+          "Spent"
+        ],
+        "description": "Designated route to search for expenses by value.",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpent/responsible/{id}": {
+      "get": {
+        "tags": [
+          "Spent"
+        ],
+        "description": "Designated route to search for expenses by responsible.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpent/register": {
+      "post": {
+        "tags": [
+          "Spent"
+        ],
+        "description": "Designated route to create expenses.",
+        "parameters": [
+          {
+            "name": "Spent",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data_cadastro": {
+                  "type": "date-time"
+                },
+                "id_responsavel": {
+                  "type": "integer"
+                },
+                "id_tipo_gasto": {
+                  "type": "integer"
+                },
+                "id_estabelecimento": {
+                  "type": "integer"
+                },
+                "observacao": {
+                  "type": "string"
+                },
+                "valor": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data_cadastro",
+                "id_responsavel",
+                "id_tipo_gasto",
+                "id_estabelecimento",
+                "observacao",
+                "valor"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpent/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Spent"
+        ],
+        "description": "Designated route to delete expenses.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpent/edit/{id}": {
+      "put": {
+        "tags": [
+          "Spent"
+        ],
+        "description": "Designated route to edit expenses.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Spent",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data_cadastro": {
+                  "type": "date-time"
+                },
+                "id_responsavel": {
+                  "type": "integer"
+                },
+                "id_tipo_gasto": {
+                  "type": "integer"
+                },
+                "id_estabelecimento": {
+                  "type": "integer"
+                },
+                "observacao": {
+                  "type": "string"
+                },
+                "valor": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data_cadastro",
+                "id_responsavel",
+                "id_tipo_gasto",
+                "id_estabelecimento",
+                "observacao",
+                "valor"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerResponsible/{id?}": {
+      "get": {
+        "tags": [
+          "Responsible"
+        ],
+        "description": "Designated route to search for those responsible.",
+        "parameters": [
+          {
+            "name": "id?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerResponsible/register": {
+      "post": {
+        "tags": [
+          "Responsible"
+        ],
+        "description": "Designated route to create those responsible.",
+        "parameters": [
+          {
+            "name": "Responsible",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data_cadastro": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data_cadastro"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerResponsible/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Responsible"
+        ],
+        "description": "Designated route to delete those responsible.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerResponsible/edit/{id}": {
+      "put": {
+        "tags": [
+          "Responsible"
+        ],
+        "description": "Designated route to delete those responsible.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Responsible",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data_cadastro": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data_cadastro"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfExpense/{type?}": {
+      "get": {
+        "tags": [
+          "Type of expense"
+        ],
+        "description": "Designated route for expense type search.",
+        "parameters": [
+          {
+            "name": "type?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfExpense/register": {
+      "post": {
+        "tags": [
+          "Type of expense"
+        ],
+        "description": "Designated route to create expense type.",
+        "parameters": [
+          {
+            "name": "Type of expense",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfExpense/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Type of expense"
+        ],
+        "description": "Designated route to delete expense type.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfExpense/edit/{id}": {
+      "put": {
+        "tags": [
+          "Type of expense"
+        ],
+        "description": "Designated route to edit expense type.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Type of expense",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerEstablishment/{nameEstablishment?}": {
+      "get": {
+        "tags": [
+          "Establishment"
+        ],
+        "description": "route aimed at searching for establishments.",
+        "parameters": [
+          {
+            "name": "nameEstablishment?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerEstablishment/register": {
+      "post": {
+        "tags": [
+          "Establishment"
+        ],
+        "description": "route aimed at registering establishments.",
+        "parameters": [
+          {
+            "name": "Establishment",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerEstablishment/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Establishment"
+        ],
+        "description": "route aimed at excluding establishments.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerEstablishment/edit/{id}": {
+      "put": {
+        "tags": [
+          "Establishment"
+        ],
+        "description": "route aimed at publishing establishments.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Establishment",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerRevenue/period/{period}": {
+      "get": {
+        "tags": [
+          "Revenues"
+        ],
+        "description": "Designated route for revenues search.",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerRevenue/register": {
+      "post": {
+        "tags": [
+          "Revenues"
+        ],
+        "description": "Designated route to create revenue.",
+        "parameters": [
+          {
+            "name": "Revenues",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "id_tipo_receita": {
+                  "type": "integer"
+                },
+                "id_responsavel": {
+                  "type": "integer"
+                },
+                "data_cadastro": {
+                  "type": "date-time"
+                },
+                "observacao": {
+                  "type": "string"
+                },
+                "valor": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id_tipo_receita",
+                "id_responsavel",
+                "data_cadastro",
+                "observacao",
+                "valor"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerRevenue/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Revenues"
+        ],
+        "description": "Designated route to delete revenue.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerRevenue/edit/{id}": {
+      "put": {
+        "tags": [
+          "Revenues"
+        ],
+        "description": "Designated route to edit revenue.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Revenues",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "id_tipo_receita": {
+                  "type": "integer"
+                },
+                "id_responsavel": {
+                  "type": "integer"
+                },
+                "data_cadastro": {
+                  "type": "date-time"
+                },
+                "observacao": {
+                  "type": "string"
+                },
+                "valor": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id_tipo_receita",
+                "id_responsavel",
+                "data_cadastro",
+                "observacao",
+                "valor"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfRevenue/{typeOfRevenue?}": {
+      "get": {
+        "tags": [
+          "Type of revenue"
+        ],
+        "description": "Designated route for revenue type search.",
+        "parameters": [
+          {
+            "name": "typeOfRevenue?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfRevenue/register": {
+      "post": {
+        "tags": [
+          "Type of revenue"
+        ],
+        "description": "Designated route for revenue type create.",
+        "parameters": [
+          {
+            "name": "Type of revenue",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfRevenue/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Type of revenue"
+        ],
+        "description": "Designated route for revenue type delete.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerTypeOfRevenue/edit/{id}": {
+      "put": {
+        "tags": [
+          "Type of revenue"
+        ],
+        "description": "Designated route for revenue type edit.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Type of revenue",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nome": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpentPerResponsiblePerPeriod/{id}": {
+      "get": {
+        "tags": [
+          "Spent by responsible"
+        ],
+        "description": "Designated route for collection of spent by responsible person grouped by Period.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "initialPeriod",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "finalPeriod",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerRevenuePerResponsiblePerPeriod/{id}": {
+      "get": {
+        "tags": [
+          "Revenues by responsible"
+        ],
+        "description": "Designated route for collection of revenues by responsible person grouped by period.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "initialPeriod",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "finalPeriod",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerFinalBalancePerMonth/": {
+      "get": {
+        "tags": [
+          "Balance"
+        ],
+        "description": "Designated route to fetch ending balance grouped by months.",
+        "parameters": [
+          {
+            "name": "initialMonth",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "finalMonth",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerSpentPerResponsiblePerMonth/{id}": {
+      "get": {
+        "tags": [
+          "Spent by responsible"
+        ],
+        "description": "Designated route for collection of spent by responsible person grouped by months.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "initialMonth",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "finalMonth",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/routerRevenuePerResponsiblePerMonth/{id}": {
+      "get": {
+        "tags": [
+          "Revenues by responsible"
+        ],
+        "description": "Designated route for collection of revenues by responsible person grouped by months.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "initialMonth",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "finalMonth",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  }
+}

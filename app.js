@@ -14,13 +14,20 @@ const { routerRevenuePerResponsiblePerPeriod } = require('./routes/routeRevenueP
 const { routerFinalBalancePerMonth } = require('./routes/routeFinalBalancePerMonth');
 const { routerSpentPerResponsiblePerMonth } = require('./routes/routeSpentPerResponsiblePerMonthController');
 const { routerRevenuePerResponsiblePerMonth } = require('./routes/routeRevenuePerResponsiblePerMonth');
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger_output.json");
+const { root } = require('./controllers/rootController');
+
+app.use("/swagger-ui", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.status(200).json({ msg: "Welcome to API of Control of Family Expenses" })
-});
+app.get('/', root
+    // #swagger.name = 'root'
+    // #swagger.description = 'Welcome.'
+    //#swagger.tags = ['Root']
+);
 
 app.use('/routerFinalBalancePerPeriod', routerFinalBalancePerPeriod);
 
