@@ -21,7 +21,7 @@ const searchFinalBalancePMonthController = async (req, res) => { // preciso faze
                 where: {
                     data_cadastro: { gte: initialMonth.toISOString() }
                 }
-            })
+            });
 
             let spentResult = await prisma.gastos.findMany({
                 select: {
@@ -46,7 +46,7 @@ const searchFinalBalancePMonthController = async (req, res) => { // preciso faze
 
         }
         else {
-            finalMonth = parseDate(finalMonth)
+            finalMonth = parseDate(finalMonth);
             let revenueResult = await prisma.receita.findMany({
                 select: {
                     valor: true,
@@ -58,7 +58,7 @@ const searchFinalBalancePMonthController = async (req, res) => { // preciso faze
                         { data_cadastro: { lte: finalMonth.toISOString() } }
                     ]
                 }
-            })
+            });
 
             let spentResult = await prisma.gastos.findMany({
                 select: {
@@ -82,13 +82,13 @@ const searchFinalBalancePMonthController = async (req, res) => { // preciso faze
             return res.status(200).json({
                 status: "data found",
                 Balance: objCreated
-            })
+            });
         }
 
     } catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 
 module.exports = { searchFinalBalancePMonthController };

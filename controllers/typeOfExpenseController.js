@@ -55,7 +55,7 @@ let typeOfExpenseController = async (req, res) => {
         res.status(404).json({ msg: `Error: ${err}` });
     }
 
-}
+};
 
 let registerTypeOfExpenseController = async (req, res) => {
     try {
@@ -68,12 +68,12 @@ let registerTypeOfExpenseController = async (req, res) => {
         res.status(200).json({
             status: 'successfully registered',
             data: result
-        })
+        });
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let deleteTypeOfExpenseController = async (req, res) => {
     try {
@@ -86,13 +86,13 @@ let deleteTypeOfExpenseController = async (req, res) => {
         res.status(200).json({
             status: 'successfully deleted',
             data: result
-        })
+        });
 
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let editTypeOfExpenseController = async (req, res) => {
     try {
@@ -109,12 +109,12 @@ let editTypeOfExpenseController = async (req, res) => {
         res.status(200).json({
             status: 'successfully updated',
             data: result
-        })
+        });
 
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 module.exports = { typeOfExpenseController, registerTypeOfExpenseController, deleteTypeOfExpenseController, editTypeOfExpenseController };

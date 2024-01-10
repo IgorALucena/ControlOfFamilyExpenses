@@ -16,10 +16,10 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialPeri
                 where: {
                     data_cadastro: { gte: initialPeriod.toISOString() }
                 }
-            })
+            });
 
             let valueSumSpent = sumSpentOrRevenue(spentResult);
-           
+
             let revenueResult = await prisma.receita.findMany({
                 select: {
                     valor: true
@@ -27,7 +27,7 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialPeri
                 where: {
                     data_cadastro: { gte: initialPeriod.toISOString() }
                 }
-            })
+            });
 
             let valueSumRevenue = sumSpentOrRevenue(revenueResult);
 
@@ -54,7 +54,7 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialPeri
                         { data_cadastro: { lte: finalPeriod.toISOString() } }
                     ]
                 }
-            })
+            });
             let valueSumSpent = sumSpentOrRevenue(spentResult);
 
             let revenueResult = await prisma.receita.findMany({
@@ -67,9 +67,9 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialPeri
                         { data_cadastro: { lte: finalPeriod.toISOString() } }
                     ]
                 }
-            })
+            });
             let valueSumRevenue = sumSpentOrRevenue(revenueResult);
-            
+
             let whatWasLeft = Math.abs(valueSumSpent - valueSumRevenue);
             return res.status(200).json({
                 status: "data found",
@@ -81,7 +81,7 @@ const searchFinalBalancePPeriodController = async (req, res) => { // initialPeri
     } catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 
 module.exports = { searchFinalBalancePPeriodController };

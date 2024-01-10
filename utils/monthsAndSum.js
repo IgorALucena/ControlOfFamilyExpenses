@@ -1,4 +1,4 @@
-let monthsAndSum = (revenueResult ) =>{
+let monthsAndSum = (revenueResult) => {
 
     let arrayObj = [
         { mes: "January", soma: 0 },
@@ -25,4 +25,4 @@ let monthsAndSum = (revenueResult ) =>{
 
 }
 
-module.exports = {monthsAndSum};
+module.exports = { monthsAndSum };

@@ -50,7 +50,7 @@ let searchTypeOfRevenue = async (req, res) => {
         res.status(404).json({ msg: `Error: ${err}` });
     }
 
-}
+};
 
 let registerTypeOfRevenue = async (req, res) => {
     try {
@@ -63,12 +63,12 @@ let registerTypeOfRevenue = async (req, res) => {
         res.status(200).json({
             status: 'successfully registered',
             data: result
-        })
+        });
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let deleteTypeOfRevenue = async (req, res) => {
     try {
@@ -81,13 +81,13 @@ let deleteTypeOfRevenue = async (req, res) => {
         res.status(200).json({
             status: 'successfully deleted',
             data: result
-        })
+        });
 
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let editTypeOfRevenue = async (req, res) => {
     try {
@@ -104,12 +104,12 @@ let editTypeOfRevenue = async (req, res) => {
         res.status(200).json({
             status: 'successfully updated',
             data: result
-        })
+        });
 
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 module.exports = { searchTypeOfRevenue, registerTypeOfRevenue, deleteTypeOfRevenue, editTypeOfRevenue }

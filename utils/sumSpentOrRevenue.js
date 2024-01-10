@@ -3,9 +3,7 @@ let sumSpentOrRevenue = (result) => {
     for (let index = 0; index < result.length; index++) {
         sum += Number(result[index].valor);
     }
-    
     return sum;
-    
 }
 
 module.exports = { sumSpentOrRevenue };

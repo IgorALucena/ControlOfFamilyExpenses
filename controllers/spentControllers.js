@@ -1,10 +1,10 @@
 const { PrismaClient } = require('@prisma/client');
+const { parseDate } = require('../utils/parseDate');
 const prisma = new PrismaClient();
 
 let spentPerPeriodController = async (req, res) => {
     try {
-        let date = new Date(req.params.period);
-        date.setHours(23, 59, 59, 999);
+        let date = parseDate(req.params.period);
         let nextDay = new Date(date);
         nextDay.setDate(date.getDate() + 1);
 
@@ -31,7 +31,7 @@ let spentPerPeriodController = async (req, res) => {
             return res.status(200).json({
                 status: "data found.",
                 data: result
-            })
+            });
 
 
         }
@@ -40,7 +40,7 @@ let spentPerPeriodController = async (req, res) => {
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let spentValueController = async (req, res) => {
     try {
@@ -54,8 +54,8 @@ let spentValueController = async (req, res) => {
             where: {
                 valor: valueParameter
             }
-        })
-        console.log(result);
+        });
+
         if (result.length === 0) {
             return res.status(404).json({ status: "No expenses found for value reported." });
         }
@@ -68,7 +68,7 @@ let spentValueController = async (req, res) => {
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let spentResponsibleController = async (req, res) => {
     try {
@@ -82,9 +82,8 @@ let spentResponsibleController = async (req, res) => {
             where: {
                 id_responsavel: id
             }
-        })
+        });
 
-        console.log(result);
         if (result.length === 0) {
             return res.status(404).json({ status: "No expenses found for responsible reported." });
         }
@@ -96,7 +95,7 @@ let spentResponsibleController = async (req, res) => {
     } catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let registerSpent = async (req, res) => {
     try {
@@ -115,12 +114,12 @@ let registerSpent = async (req, res) => {
         res.status(200).json({
             status: 'successfully registered',
             data: result
-        })
+        });
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let deleteSpent = async (req, res) => {
     try {
@@ -133,13 +132,13 @@ let deleteSpent = async (req, res) => {
         res.status(200).json({
             status: 'successfully deleted',
             data: result
-        })
+        });
 
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 let editSpent = async (req, res) => {
     try {
@@ -162,13 +161,13 @@ let editSpent = async (req, res) => {
         res.status(200).json({
             status: 'successfully updated',
             data: result
-        })
+        });
 
     }
     catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 
 module.exports = { spentPerPeriodController, spentValueController, spentResponsibleController, registerSpent, deleteSpent, editSpent };

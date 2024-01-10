@@ -1,4 +1,4 @@
-let monthsAndSub = (spentResult, arrayObj) =>{
+let monthsAndSub = (spentResult, arrayObj) => {
 
     for (let index = 0; index < spentResult.length; index++) {
         let data = new Date(spentResult[index].data_cadastro);
@@ -10,4 +10,4 @@ let monthsAndSub = (spentResult, arrayObj) =>{
 
 }
 
-module.exports = {monthsAndSub};
+module.exports = { monthsAndSub };

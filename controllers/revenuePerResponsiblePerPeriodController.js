@@ -20,7 +20,7 @@ const searchRevenuePerResponsiblePerPeriod = async (req, res) => {
                 }
             });
 
-            let valueSumRevenue =  sumSpentOrRevenue(revenueResult);
+            let valueSumRevenue = sumSpentOrRevenue(revenueResult);
 
             let currentData = new Date();
             return res.status(200).json({
@@ -43,11 +43,11 @@ const searchRevenuePerResponsiblePerPeriod = async (req, res) => {
                         { data_cadastro: { gte: initialPeriod.toISOString() } },
                         { data_cadastro: { lte: finalPeriod.toISOString() } }
                     ],
-                    id_responsavel:id
+                    id_responsavel: id
                 }
             });
 
-            let valueSumRevenue =  sumSpentOrRevenue(revenueResult);
+            let valueSumRevenue = sumSpentOrRevenue(revenueResult);
 
             return res.status(200).json({
                 status: "data found",
@@ -58,7 +58,7 @@ const searchRevenuePerResponsiblePerPeriod = async (req, res) => {
         }
     } catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
-    };
+    }
 };
 
 

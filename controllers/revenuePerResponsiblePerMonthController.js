@@ -16,14 +16,14 @@ const searchRevenuePerResponsiblePerMonthController = async (req, res) => {
             let revenueResult = await prisma.receita.findMany({
                 select: {
                     valor: true,
-                    data_cadastro:true
+                    data_cadastro: true
                 },
                 where: {
                     data_cadastro: { gte: initialMonth.toISOString() },
                     id_responsavel: id
                 }
-            })
-    
+            });
+
             let monthAndSum = monthsAndSum(revenueResult);
 
             let objCreated = objBuild(monthAndSum);
@@ -40,7 +40,7 @@ const searchRevenuePerResponsiblePerMonthController = async (req, res) => {
             let revenueResult = await prisma.receita.findMany({
                 select: {
                     valor: true,
-                    data_cadastro:true
+                    data_cadastro: true
                 },
                 where: {
                     AND: [
@@ -63,7 +63,7 @@ const searchRevenuePerResponsiblePerMonthController = async (req, res) => {
     } catch (err) {
         res.status(404).json({ msg: `Error: ${err}` });
     }
-}
+};
 
 
 module.exports = { searchRevenuePerResponsiblePerMonthController };

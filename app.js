@@ -42,9 +42,9 @@ app.use('/routerRevenuePerResponsiblePerPeriod', routerRevenuePerResponsiblePerP
 
 app.use('/routerFinalBalancePerMonth', routerFinalBalancePerMonth);
 
-app.use('/routeSpentPerResponsiblePerMonth', routerSpentPerResponsiblePerMonth);
+app.use('/routerSpentPerResponsiblePerMonth', routerSpentPerResponsiblePerMonth);
 
-app.use('/routeRevenuePerResponsiblePerMonth', routerRevenuePerResponsiblePerMonth);
+app.use('/routerRevenuePerResponsiblePerMonth', routerRevenuePerResponsiblePerMonth);
 
 app.listen(PORT, () => {
     console.log('Server running!')
