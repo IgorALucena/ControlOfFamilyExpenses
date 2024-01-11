@@ -10,11 +10,11 @@ The project in question aims to build an API capable of providing the necessary 
 
 #### Activities:
 
-**000**: create and model the database as shown in the image below:
+**Req 000**: create and model the database as shown in the image below:
 
 <img src="/assets/model.png">
 
-**001**: CRUD Expense Implement CRUD operations for the Expense table. In the data query operation, create various query endpoint options: By period, By Value, by Responsible, etc…
+**Req 001**: CRUD Expense Implement CRUD operations for the Expense table. In the data query operation, create various query endpoint options: By period, By Value, by Responsible, etc…
 
 **Req 002**: CRUD Responsible Implement CRUD operations for the Responsible table. In the data query operation, if a responsible name is provided, search for part of the name. If a name is not provided, return all registered data.
 
