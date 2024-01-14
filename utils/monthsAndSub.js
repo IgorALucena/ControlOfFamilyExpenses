@@ -1,12 +1,11 @@
-let monthsAndSub = (spentResult, arrayObj) => {
+let monthsAndSub = (spentResult, monthlyRevenue) => {
 
-    for (let index = 0; index < spentResult.length; index++) {
-        let data = new Date(spentResult[index].data_cadastro);
-        let month = data.getMonth();
-        arrayObj[month].soma -= Number(spentResult[index].valor);
+    for (let result of spentResult) {
+        let monthYear = result.data_cadastro.toISOString().slice(0, 7);
+        monthlyRevenue[monthYear] -= Number(result._sum.valor);
     }
 
-    return arrayObj;
+    return monthlyRevenue;
 
 }
 

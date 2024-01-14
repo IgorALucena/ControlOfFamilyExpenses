@@ -13,51 +13,49 @@ const searchRevenuePerResponsiblePerMonthController = async (req, res) => {
         let finalMonth = req.query.finalMonth;
 
         if (!finalMonth) {
-            let revenueResult = await prisma.receita.findMany({
-                select: {
-                    valor: true,
-                    data_cadastro: true
+            let revenueResult = await prisma.receita.groupBy({
+                by: ['data_cadastro'],
+                _sum: {
+                    valor: true
                 },
                 where: {
+
                     data_cadastro: { gte: initialMonth.toISOString() },
                     id_responsavel: id
                 }
             });
 
-            let monthAndSum = monthsAndSum(revenueResult);
-
-            let objCreated = objBuild(monthAndSum);
+            let sumRevenue = monthsAndSum(revenueResult);
 
             return res.status(200).json({
                 status: "data found",
-                revenues: objCreated
+                revenues: sumRevenue
             });
         }
         else {
 
             finalMonth = parseDate(finalMonth);
 
-            let revenueResult = await prisma.receita.findMany({
-                select: {
-                    valor: true,
-                    data_cadastro: true
+            let revenueResult = await prisma.receita.groupBy({
+                by: ['data_cadastro'],
+                _sum: {
+                    valor: true
                 },
                 where: {
                     AND: [
                         { data_cadastro: { gte: initialMonth.toISOString() } },
-                        { data_cadastro: { lte: finalMonth.toISOString() } }
+                        { data_cadastro: { lte: finalMonth.toISOString() } },
+
                     ],
                     id_responsavel: id
                 }
             });
 
-            let monthAndSum = monthsAndSum(revenueResult);
-
-            let objCreated = objBuild(monthAndSum);
+            let sumRevenue = monthsAndSum(revenueResult);
 
             return res.status(200).json({
                 status: "data found",
-                revenues: objCreated
+                revenues: sumRevenue
             });
         }
     } catch (err) {

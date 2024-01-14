@@ -6,51 +6,50 @@ const { objBuild } = require('../utils/objBuild');
 const prisma = new PrismaClient();
 
 
-const searchFinalBalancePMonthController = async (req, res) => { // preciso fazer a lógica aqui ainda. Isso é só a cópia de outro controller que já fiz.
+const searchFinalBalancePMonthController = async (req, res) => {
     try {
 
         let initialMonth = parseDate(req.query.initialMonth);
         let finalMonth = req.query.finalMonth;
 
         if (!finalMonth) {
-            let revenueResult = await prisma.receita.findMany({
-                select: {
-                    valor: true,
-                    data_cadastro: true
+
+            let revenueResult = await prisma.receita.groupBy({
+                by: ['data_cadastro'],
+                _sum: {
+                    valor: true
                 },
                 where: {
-                    data_cadastro: { gte: initialMonth.toISOString() }
+                    data_cadastro: { gte: initialMonth }
                 }
             });
 
-            let spentResult = await prisma.gastos.findMany({
-                select: {
-                    valor: true,
-                    data_cadastro: true
+            let sumRevenue = monthsAndSum(revenueResult);
+
+            let spentResult = await prisma.gastos.groupBy({
+                by: ['data_cadastro'],
+                _sum: {
+                    valor: true
                 },
                 where: {
-                    data_cadastro: { gte: initialMonth.toISOString() }
+                    data_cadastro: { gte: initialMonth }
                 }
             });
 
-            let monthAndSum = monthsAndSum(revenueResult);
-
-            let monthAndSub = monthsAndSub(spentResult, monthAndSum);
-
-            let objCreated = objBuild(monthAndSub);
+            let finalBalancePerMonth = monthsAndSub(spentResult, sumRevenue);
 
             return res.status(200).json({
                 status: "data found",
-                Balance: objCreated
+                Balance: finalBalancePerMonth
             });
 
         }
         else {
             finalMonth = parseDate(finalMonth);
-            let revenueResult = await prisma.receita.findMany({
-                select: {
-                    valor: true,
-                    data_cadastro: true
+            let revenueResult = await prisma.receita.groupBy({
+                by: ['data_cadastro'],
+                _sum: {
+                    valor: true
                 },
                 where: {
                     AND: [
@@ -60,10 +59,12 @@ const searchFinalBalancePMonthController = async (req, res) => { // preciso faze
                 }
             });
 
-            let spentResult = await prisma.gastos.findMany({
-                select: {
-                    valor: true,
-                    data_cadastro: true
+            let sumRevenue = monthsAndSum(revenueResult);
+
+            let spentResult = await prisma.gastos.groupBy({
+                by: ['data_cadastro'],
+                _sum: {
+                    valor: true
                 },
                 where: {
                     AND: [
@@ -73,15 +74,11 @@ const searchFinalBalancePMonthController = async (req, res) => { // preciso faze
                 }
             });
 
-            let monthAndSum = monthsAndSum(revenueResult);
-
-            let monthAndSub = monthsAndSub(spentResult, monthAndSum);
-
-            let objCreated = objBuild(monthAndSub);
+            let finalBalancePerMonth = monthsAndSub(spentResult, sumRevenue);
 
             return res.status(200).json({
                 status: "data found",
-                Balance: objCreated
+                Balance: finalBalancePerMonth
             });
         }
 
